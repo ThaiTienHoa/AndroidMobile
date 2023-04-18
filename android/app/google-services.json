@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "430643273288",
+    "project_id": "login-register-firebase-581bb",
+    "storage_bucket": "login-register-firebase-581bb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:430643273288:android:5add01f5ac7f920aadc27d",
+        "android_client_info": {
+          "package_name": "com.example.loginandregister"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "430643273288-4nqi62lsnf0vbjelmm6bf4urdcao0t4q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCW8T18PgWuf0NIez6pZo4tu6ZPMuEBTM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "430643273288-4nqi62lsnf0vbjelmm6bf4urdcao0t4q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
