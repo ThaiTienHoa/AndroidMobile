@@ -33,11 +33,7 @@ public class HomeActivity extends AppCompatActivity {
 
     EditText etEnterSource;
     EditText etEnterDestination;
-    EditText etDate;
     Button btnSearch;
-    TextView tvToDay;
-    TextView tvTomorrow;
-
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference bookings = db.collection("bookings");
@@ -56,10 +52,7 @@ public class HomeActivity extends AppCompatActivity {
 
         etEnterSource = findViewById(R.id.etEnterSource);
         etEnterDestination = findViewById(R.id.etEnterDestination);
-        etDate = findViewById(R.id.etDate);
         btnSearch = findViewById(R.id.btnSearch);
-        tvToDay = findViewById(R.id.tvToday);
-        tvTomorrow = findViewById(R.id.tvTomorrow);
         btnSearch = findViewById(R.id.btnSearch);
 
         calendar = Calendar.getInstance();
@@ -106,37 +99,12 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        List<String> monthName = List.of("Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec");
-        List<String> weekName = List.of("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
-
-        tvToDay.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View view) {
-                int day = (dayOfWeek - 1) % 7;
-                String dayName = weekName.get(day);
-                String month_Name = monthName.get(currentMonth);
-                etDate.setText(dayName + ", " + currentDay + " " + month_Name);
-            }
-        });
-
-        tvTomorrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int day = (dayOfWeek) % 7;
-                String dayName = weekName.get(day);
-                String month_Name = monthName.get(currentMonth);
-                etDate.setText(dayName + ", " + currentDay + " " + month_Name);
-            }
-        });
-
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String idCollection = bookings.document().getId();
 
                 BookingModel bookingModel = new BookingModel(
-                        etDate.getText().toString(),
                         etEnterDestination.getText().toString(),
                         etEnterSource.getText().toString(),
                         idCollection,

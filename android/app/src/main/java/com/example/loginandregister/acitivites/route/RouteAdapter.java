@@ -74,7 +74,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder> 
             tvBusDes.setText(routeModel.getDescription());
             tvBusBoarding.setText(routeModel.getFrom());
             tvBusDestination.setText(routeModel.getTo());
-            tvDepArrTime.setText(routeModel.getTiming());
+            tvDepArrTime.setText(routeModel.getTimingStart());
             tvTotalTime.setText(routeModel.getTravellingTime());
             tvPrice.setText(routeModel.getPrice());
             busBookingCard.setOnClickListener(view -> onBusItemListener.onClick(routeModel));

@@ -57,13 +57,11 @@ public class RouteListActivity extends AppCompatActivity implements OnBusItemLis
         btnBack.setOnClickListener(view -> finish());
     }
 
-
     private void getAllStore() {
         listOfRoute.clear();
         busRef.addSnapshotListener((value, error) -> {
             if (value != null && !value.isEmpty()) {
                 for (QueryDocumentSnapshot doc : value) {
-                    //Log.d(TAG, doc.getData().get("address").toString());
                     RouteModel model = doc.toObject(RouteModel.class);
                     listOfRoute.add(model);
                 }
@@ -81,6 +79,8 @@ public class RouteListActivity extends AppCompatActivity implements OnBusItemLis
                 bookingRef.document(bookingId).update("busId", route.getId());
             }
         });
-        startActivity(new Intent(this, SeatSelectionActivity.class));
+        Intent intent = new Intent(this, SeatSelectionActivity.class);
+        intent.putExtra("busId", route.getId());
+        startActivity(intent);
     }
 }

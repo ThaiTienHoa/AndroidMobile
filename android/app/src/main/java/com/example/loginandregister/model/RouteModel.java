@@ -11,9 +11,10 @@ public class RouteModel {
     private ArrayList<Seats> seats;
     private String price;
     private String travellingTime;
-    private String timing;
+    private String timingStart;
+    private String timingEnd;
 
-    public RouteModel(String id, String name, String description, String from, String to, ArrayList<Seats> seats, String price, String travellingTime, String timing) {
+    public RouteModel(String id, String name, String description, String from, String to, ArrayList<Seats> seats, String price, String travellingTime, String timingStart, String timingEnd) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -22,7 +23,8 @@ public class RouteModel {
         this.seats = seats;
         this.price = price;
         this.travellingTime = travellingTime;
-        this.timing = timing;
+        this.timingStart = timingStart;
+        this.timingEnd = timingEnd;
     }
 
     public RouteModel() {}
@@ -91,11 +93,19 @@ public class RouteModel {
         this.travellingTime = travellingTime;
     }
 
-    public String getTiming() {
-        return timing;
+    public String getTimingStart() {
+        return timingStart;
     }
 
-    public void setTiming(String timing) {
-        this.timing = timing;
+    public void setTimingStart(String timingStart) {
+        this.timingStart = timingStart;
+    }
+
+    public String getTimingEnd() {
+        return timingEnd;
+    }
+
+    public void setTimingEnd(String timingEnd) {
+        this.timingEnd = timingEnd;
     }
 }
