@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/busBookingCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:padding="18dp"
+        android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvStartsfrom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+                android:text="Starts From "
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvBusBoarding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:text="Railway Station"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvStartsfrom" />
+
+    <ImageView
+        android:id="@+id/ivBusDestination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/forward_arrow"
+        android:drawablePadding="10dp"
+        app:layout_constraintBottom_toBottomOf="@id/tvBusBoarding"
+        app:layout_constraintStart_toEndOf="@id/tvBusBoarding"
+        app:layout_constraintTop_toBottomOf="@id/tvStartsfrom" />
+
+    <TextView
+        android:id="@+id/tvBusDestination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:drawablePadding="10dp"
+        android:text="Swargate"
+        app:layout_constraintStart_toEndOf="@id/ivBusDestination"
+        app:layout_constraintTop_toBottomOf="@id/tvStartsfrom" />
+
+
+    <TextView
+        android:id="@+id/tvDepArrTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:textColor="@color/black"
+                android:text="15:00 - 20:45"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvBusBoarding" />
+
+    <TextView
+        android:id="@+id/tvTotalTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="5dp"
+        android:text="5h 45m "
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDepArrTime" />
+
+    <TextView
+        android:id="@+id/tvNoOfSeats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="5dp"
+        android:text="35 Seats"
+        app:layout_constraintStart_toEndOf="@id/tvTotalTime"
+        app:layout_constraintTop_toBottomOf="@id/tvDepArrTime" />
+
+    <TextView
+        android:id="@+id/tvBusName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+                android:text="Travel Agency Names"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:maxLines="1"
+        android:layout_marginTop="15dp"
+        android:drawablePadding="5dp"
+        android:drawableStart="@drawable/select_boarding"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTotalTime"/>
+
+    <TextView
+        android:id="@+id/tvBusDesc"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingBottom="15dp"
+        app:layout_constraintTop_toBottomOf="@id/tvBusName"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Bharat Benz A/C Seater(2+2)"/>
+
+    <TextView
+        android:id="@+id/tvFrom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="52dp"
+        android:text="From "
+        android:layout_marginRight="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.358" />
+
+    <TextView
+        android:id="@+id/tvPrise"
+        android:layout_width="wrap_content"
+        android:layout_height="17dp"
+        android:layout_marginEnd="0dp"
+                android:text="₹299"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintStart_toEndOf="@id/tvFrom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.354" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="63dp"
+        android:layout_height="46dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.788"
+        app:srcCompat="@drawable/rating_img" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#F8DFE0"
+        />
+
+</LinearLayout>

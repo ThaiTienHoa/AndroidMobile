@@ -7,7 +7,7 @@
     android:gravity="center"
     android:padding="15dp"
     android:layout_height="match_parent"
-    tools:context=".Register">
+    tools:context=".acitivites.loginAndResgiter.Register">
 
     <TextView
         android:textSize="25sp"
