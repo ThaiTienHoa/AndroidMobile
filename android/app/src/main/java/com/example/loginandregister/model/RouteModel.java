@@ -25,6 +25,8 @@ public class RouteModel {
         this.timing = timing;
     }
 
+    public RouteModel() {}
+
     public String getId() {
         return id;
     }

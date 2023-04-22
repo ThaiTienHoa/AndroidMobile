@@ -13,6 +13,8 @@ public class Seats {
         this.type = type;
     }
 
+    public Seats() {}
+
     public String getAvailable() {
         return available;
     }

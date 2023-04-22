@@ -12,6 +12,7 @@ public class Users {
         this.totalFare = totalFare;
         this.totalBookings = totalBookings;
     }
+    public Users() {}
 
     public String getMobileNo() {
         return mobileNo;

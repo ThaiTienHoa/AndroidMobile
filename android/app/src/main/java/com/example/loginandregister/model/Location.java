@@ -9,6 +9,7 @@ public class Location {
         this.id = id;
         this.name = name;
     }
+    public Location() {}
 
     public String getId() {
         return id;

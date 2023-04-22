@@ -14,6 +14,7 @@ public class BookingModel {
         this.bookingId = bookingId;
         this.busId = busId;
     }
+    public BookingModel() {}
 
     public String getDate() {
         return date;

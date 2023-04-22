@@ -1,5 +1,6 @@
 package com.example.loginandregister.acitivites.route;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.loginandregister.R;
+import com.example.loginandregister.acitivites.seat.SeatSelectionActivity;
 import com.example.loginandregister.model.RouteModel;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,7 +34,6 @@ public class RouteListActivity extends AppCompatActivity implements OnBusItemLis
 
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-
     CollectionReference busRef = db.collection("buses");
     CollectionReference bookingRef = db.collection("bookings");
     CollectionReference userRef = db.collection("users");
@@ -62,7 +63,7 @@ public class RouteListActivity extends AppCompatActivity implements OnBusItemLis
         busRef.addSnapshotListener((value, error) -> {
             if (value != null && !value.isEmpty()) {
                 for (QueryDocumentSnapshot doc : value) {
-                    Log.d(TAG, doc.getData().get("address").toString());
+                    //Log.d(TAG, doc.getData().get("address").toString());
                     RouteModel model = doc.toObject(RouteModel.class);
                     listOfRoute.add(model);
                 }
@@ -80,6 +81,6 @@ public class RouteListActivity extends AppCompatActivity implements OnBusItemLis
                 bookingRef.document(bookingId).update("busId", route.getId());
             }
         });
-        //navController.navigate(R.id.action_buseListFragment_to_seatSelectionFragment)
+        startActivity(new Intent(this, SeatSelectionActivity.class));
     }
 }
