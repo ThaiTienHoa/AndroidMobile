@@ -6,7 +6,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,6 +38,8 @@ public class DetailBookingActivity extends AppCompatActivity {
     TextView tvBusBoarding, tvBusDestination, tvDepArrTime, tvTotalTime;
     TextView tvBusName, tvEmail, tvMobile, tvAge, tvName, tvSeatNo, tvToolbarTitle;
 
+    ProgressBar progressBar;
+
     Button btnCancel;
 
     String busId, seatNo;
@@ -59,6 +63,7 @@ public class DetailBookingActivity extends AppCompatActivity {
         tvToolbarTitle = findViewById(R.id.tvToolbarTitle);
         btnCancel = findViewById(R.id.btnCancel);
         busBookingCard = findViewById(R.id.busBookingCard);
+        progressBar = findViewById(R.id.progressBar);
 
         String id = auth.getCurrentUser().getUid();
 
@@ -104,9 +109,14 @@ public class DetailBookingActivity extends AppCompatActivity {
                         tvBusName.setText(busName);
                     });
                 });
+                busBookingCard.setVisibility(View.VISIBLE);
+                btnCancel.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
             } else {
+                Toast.makeText(getApplicationContext(), "You have not any booking!!!", Toast.LENGTH_LONG).show();
                 busBookingCard.setVisibility(View.GONE);
                 btnCancel.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
             }
         });
 

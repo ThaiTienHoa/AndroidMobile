@@ -104,38 +104,11 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        btnSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String idCollection = bookings.document().getId();
-
-                BookingModel bookingModel = new BookingModel(
-                        etEnterSource.getText().toString(),
-                        etEnterDestination.getText().toString(),
-                        idCollection,
-                        ""
-                );
-                bookings.document(idCollection).set(bookingModel);
-                setBookingId(idCollection);
-                Intent intent = new Intent(getApplicationContext(), RouteListActivity.class);
-                intent.putExtra("from", etEnterSource.getText().toString());
-                intent.putExtra("to", etEnterDestination.getText().toString());
-                startActivity(intent);
-            }
-        });
-    }
-
-    private void setBookingId(String bookingId) {
-        String id = auth.getCurrentUser().getUid();
-        users.document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot doc) {
-                if (doc.getData().get("bookings") != null) {
-                    users.document(id).update("bookings", bookingId);
-                } else {
-                    users.document(id).update("bookings", bookingId);
-                }
-            }
+        btnSearch.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), RouteListActivity.class);
+            intent.putExtra("from", etEnterSource.getText().toString());
+            intent.putExtra("to", etEnterDestination.getText().toString());
+            startActivity(intent);
         });
     }
 

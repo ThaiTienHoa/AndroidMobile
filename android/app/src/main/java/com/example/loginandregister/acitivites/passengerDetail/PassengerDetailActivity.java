@@ -49,25 +49,11 @@ public class PassengerDetailActivity extends AppCompatActivity {
         String busId = getIntent().getStringExtra("busId");
         String seatNo = getIntent().getStringExtra("seat_no");
         getBusesData(busId);
-        btnProcess.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getBookingId(busId, seatNo);
-            }
-        });
+        btnProcess.setOnClickListener(view -> getBookingId(busId, seatNo));
     }
 
     private void getBookingId(String busId, String seatNo) {
-        String id = auth.getCurrentUser().getUid();
-        userRef.document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot doc) {
-                if (doc.getData().get("bookings") != null) {
-                    String bookingId = doc.getData().get("bookings").toString();
-                    setBookingsData(bookingId, busId, seatNo);
-                }
-            }
-        });
+        setBookingsData(busId, seatNo);
     }
 
     private void getBusesData(String busId) {
@@ -83,21 +69,18 @@ public class PassengerDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void setBookingsData(String bookingId, String busId, String seatNo) {
+    private void setBookingsData(String busId, String seatNo) {
 
         String name = etPassengerName.getText().toString();
         String age = etPassengerAge.getText().toString();
         String email = etPassengerEmail.getText().toString();
         String phone = etEnterPassengerMobile.getText().toString();
 
-        bookingRef.document(bookingId).update("email", email);
-        bookingRef.document(bookingId).update("mobile", phone);
-        bookingRef.document(bookingId).update("seat_no", seatNo);
-        bookingRef.document(bookingId).update("name", name);
-        bookingRef.document(bookingId).update("age", age);
-        bookingRef.document(bookingId).update("busId", busId);
-
         Intent intent = new Intent(this, PaymentsActivity.class);
+        intent.putExtra("email", email);
+        intent.putExtra("mobile", phone);
+        intent.putExtra("name", name);
+        intent.putExtra("age", age);
         intent.putExtra("busId", busId);
         intent.putExtra("seat_no", seatNo);
         startActivity(intent);

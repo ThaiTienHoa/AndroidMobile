@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.loginandregister.MainActivity;
 import com.example.loginandregister.R;
+import com.example.loginandregister.model.BookingModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,6 +38,8 @@ public class PaymentsActivity extends AppCompatActivity {
     TextView tvStartingPoint, tvEndingPoint, tvStartTime, tvEndingTime, textView5, tvPrice;
     Button btnDone;
 
+    String from, to, travellingTime, price, timingStart, timingEnd;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,11 +51,18 @@ public class PaymentsActivity extends AppCompatActivity {
         textView5 = findViewById(R.id.textView5);
         tvPrice = findViewById(R.id.tvPrice);
         btnDone = findViewById(R.id.btnDone);
+        String email = getIntent().getStringExtra("email");
+        String mobile = getIntent().getStringExtra("mobile");
+        String name = getIntent().getStringExtra("name");
+        String age = getIntent().getStringExtra("age");
         String busId = getIntent().getStringExtra("busId");
         String seatNo = getIntent().getStringExtra("seat_no");
         getBusesData(busId);
         btnDone.setOnClickListener(view -> {
+            String idBooking = createOrder(from, to);
             updateSeat(busId, seatNo);
+            updateBusIdForUser(busId);
+            setBookingData(idBooking, busId, email, mobile, name, age, seatNo);
             Toast.makeText(getApplicationContext(), "Your order sucessfull", Toast.LENGTH_LONG).show();
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
         });
@@ -61,12 +71,12 @@ public class PaymentsActivity extends AppCompatActivity {
     private void getBusesData(String busId) {
         busRef.document(busId).get().addOnSuccessListener(doc -> {
             if (doc != null) {
-                String from = (String) doc.getData().get("from");
-                String to = (String) doc.getData().get("to");
-                String travellingTime = (String) doc.getData().get("travellingTime");
-                String price = (String) doc.getData().get("price");
-                String timingStart = (String) doc.getData().get("timingStart");
-                String timingEnd = (String) doc.getData().get("timingEnd");
+                from = (String) doc.getData().get("from");
+                to = (String) doc.getData().get("to");
+                travellingTime = (String) doc.getData().get("travellingTime");
+                price = (String) doc.getData().get("price");
+                timingStart = (String) doc.getData().get("timingStart");
+                timingEnd = (String) doc.getData().get("timingEnd");
                 tvStartingPoint.setText(from);
                 tvEndingPoint.setText(to);
                 textView5.setText(travellingTime);
@@ -75,6 +85,52 @@ public class PaymentsActivity extends AppCompatActivity {
                 tvPrice.setText(price);
             }
         });
+    }
+
+    private String createOrder(String from, String to) {
+        String idCollection = bookingRef.document().getId();
+        BookingModel bookingModel = new BookingModel(
+                from,
+                to,
+                idCollection,
+                ""
+        );
+        bookingRef.document(idCollection).set(bookingModel);
+        setBookingId(idCollection);
+        return idCollection;
+    }
+
+    private void updateBusIdForUser(String busId) {
+        String id = auth.getCurrentUser().getUid();
+        userRef.document(id).get().addOnSuccessListener(doc -> {
+            if (doc.getData().get("bookings") != null) {
+                String bookingId = doc.getData().get("bookings").toString();
+                bookingRef.document(bookingId).update("busId", busId);
+            }
+        });
+    }
+
+    private void setBookingId(String bookingId) {
+        String id = auth.getCurrentUser().getUid();
+        userRef.document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot doc) {
+                if (doc.getData().get("bookings") != null) {
+                    userRef.document(id).update("bookings", bookingId);
+                } else {
+                    userRef.document(id).update("bookings", bookingId);
+                }
+            }
+        });
+    }
+
+    private void setBookingData(String bookingId, String busId, String email, String phone, String name, String age, String seatNo) {
+        bookingRef.document(bookingId).update("email", email);
+        bookingRef.document(bookingId).update("mobile", phone);
+        bookingRef.document(bookingId).update("seat_no", seatNo);
+        bookingRef.document(bookingId).update("name", name);
+        bookingRef.document(bookingId).update("age", age);
+        bookingRef.document(bookingId).update("busId", busId);
     }
 
     private void updateSeat(String busId, String seatNo) {

@@ -76,13 +76,6 @@ public class RouteListActivity extends AppCompatActivity implements OnBusItemLis
 
     @Override
     public void onClick(RouteModel route) {
-        String id = auth.getCurrentUser().getUid();
-        userRef.document(id).get().addOnSuccessListener(doc -> {
-            if (doc.getData().get("bookings") != null) {
-                String bookingId = doc.getData().get("bookings").toString();
-                bookingRef.document(bookingId).update("busId", route.getId());
-            }
-        });
         Intent intent = new Intent(this, SeatSelectionActivity.class);
         intent.putExtra("busId", route.getId());
         startActivity(intent);

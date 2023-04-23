@@ -81,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
 
         ibDatVe.setOnClickListener(view -> {
             if(!checkBooking()) {
-                Toast.makeText(getApplicationContext(), "You had ticket!!!", Toast.LENGTH_SHORT).show();
                 return;
             }
             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
@@ -100,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
         users.document(id).get().addOnSuccessListener(doc -> {
             if (doc.getData().get("bookings") == null) {
                 result = true;
+            } else {
+                Toast.makeText(getApplicationContext(), "You had ticket!!!", Toast.LENGTH_SHORT).show();
             }
         });
 

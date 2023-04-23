@@ -35,6 +35,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="vertical"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -132,8 +133,8 @@
                 android:id="@+id/tvEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Email: "
                 android:layout_marginTop="10dp"
+                android:text="Email: "
                 app:layout_constraintStart_toStartOf="@+id/tvBusName"
                 app:layout_constraintTop_toBottomOf="@+id/tvSeatNo" />
 
@@ -179,5 +180,15 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="Cancel ticket"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
