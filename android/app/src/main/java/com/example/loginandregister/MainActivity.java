@@ -12,7 +12,10 @@ import android.widget.TextView;
 import com.example.loginandregister.acitivites.detail.DetailBookingActivity;
 import com.example.loginandregister.acitivites.editRoute.EditRouteActivity;
 import com.example.loginandregister.acitivites.home.HomeActivity;
+import com.example.loginandregister.acitivites.listRoute.ListRouteActivity;
+import com.example.loginandregister.acitivites.listRoute.ListRouteAdapter;
 import com.example.loginandregister.acitivites.loginAndResgiter.Login;
+import com.example.loginandregister.acitivites.manageUser.ManagerUserActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -22,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     TextView textView;
     FirebaseUser user;
 
-    ImageButton ibDatVe, imgBtnXemthongtin, ibQuanLyTuyen;
+    ImageButton ibDatVe, imgBtnXemthongtin, ibQuanLyTuyen, imgQuanLyUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         ibDatVe = findViewById(R.id.imgBtn_datve);
         imgBtnXemthongtin = findViewById(R.id.imgbtn_xemthongtin);
         ibQuanLyTuyen = findViewById(R.id.imgBtn_quanLyTuyen);
+        imgQuanLyUser = findViewById(R.id.imgBtn_quanLyUser);
 
         user = auth.getCurrentUser();
         if (user == null) {
@@ -61,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         imgBtnXemthongtin.setOnClickListener(view ->
                 startActivity(new Intent(getApplicationContext(), DetailBookingActivity.class)));
 
-        ibQuanLyTuyen.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), EditRouteActivity.class)));
+        ibQuanLyTuyen.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), ListRouteActivity.class)));
+        imgQuanLyUser.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), ManagerUserActivity.class)));
     }
 }

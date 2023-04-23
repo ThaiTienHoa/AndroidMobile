@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -19,6 +20,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -34,6 +36,8 @@ public class EditRouteActivity extends AppCompatActivity {
     EditText idStartTime, idEndTime;
 
     MaterialButton btnProcess;
+
+    TextView btnBack;
     Location sourceLocation = new Location("", "");
     Location destinationLocation = new Location("", "");
 
@@ -51,18 +55,21 @@ public class EditRouteActivity extends AppCompatActivity {
         idEndPoint = findViewById(R.id.idEndPoint);
         idAdrress = findViewById(R.id.idAdrress);
         idBusName = findViewById(R.id.idBusName);
-        idSeatNumber = findViewById(R.id.idSeatNumber);
+        idSeatNumber = findViewById(R.id.idSeatNumberEdit);
         idDescription = findViewById(R.id.idDescription);
         idPrice = findViewById(R.id.idPrice);
         idStartTime = findViewById(R.id.idStartTime);
         idEndTime = findViewById(R.id.idEndTime);
         btnProcess = findViewById(R.id.btnProceed);
-        btnProcess.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveRote();
-            }
-        });
+        btnBack = findViewById(R.id.tvToolbarTitle);
+        btnBack.setOnClickListener(view -> finish());
+
+        btnProcess.setOnClickListener(view -> saveRote());
+
+        String busId = getIntent().getStringExtra("busId");
+        if (busId != null) {
+            fetchBus(busId);
+        }
 
         String flag = getIntent().getStringExtra("flag");
         String idLocationS = getIntent().getStringExtra("idS");
@@ -111,7 +118,6 @@ public class EditRouteActivity extends AppCompatActivity {
         HashMap<String, Object> data = new HashMap<>();
         data.put("address", idAdrress.getText().toString());
         data.put("description", idDescription.getText().toString());
-        data.put("description", idDescription.getText().toString());
         data.put("from", idStartPoint.getText().toString());
         data.put("to", idEndPoint.getText().toString());
         data.put("id", idCollection);
@@ -136,5 +142,34 @@ public class EditRouteActivity extends AppCompatActivity {
                         "Add route complete!!!", Toast.LENGTH_SHORT).show());
 
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
+    }
+
+    private void fetchBus(String busId) {
+        busRef.document(busId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot doc) {
+                String id = (String) doc.get("id");
+                String address = (String) doc.get("address");
+                String description = (String) doc.get("description");
+                String from = (String) doc.get("from");
+                String to = (String) doc.get("to");
+                String busName = (String) doc.get("name");
+                String price = (String) doc.get("price");
+                String timingStart = (String) doc.get("timingStart");
+                String timingEnd = (String) doc.get("timingEnd");
+                String travellingTime = (String) doc.get("travellingTime");
+                List<HashMap<String, String>> seats = (List<HashMap<String, String>>) doc.get("seats");
+
+                idAdrress.setText(address);
+                idDescription.setText(description);
+                idStartPoint.setText(from);
+                idEndPoint.setText(to);
+                idStartTime.setText(timingStart);
+                idEndTime.setText(timingEnd);
+                idPrice.setText(price);
+                idBusName.setText(busName);
+                idSeatNumber.setText(seats.size() + "");
+            }
+        });
     }
 }

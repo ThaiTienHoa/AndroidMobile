@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,6 +41,9 @@ public class HomeActivity extends AppCompatActivity {
     CollectionReference users = db.collection("users");
 
     Calendar calendar;
+
+    boolean result = false;
+
     int currentMonth, currentDay, dayOfWeek;
 
     Location sourceLocation = new Location("", "");
@@ -104,6 +108,10 @@ public class HomeActivity extends AppCompatActivity {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!checkBooking()) {
+                    Toast.makeText(getApplicationContext(), "You had a ticket!!!", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 String idCollection = bookings.document().getId();
 
                 BookingModel bookingModel = new BookingModel(
@@ -131,6 +139,17 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private boolean checkBooking() {
+        String id = auth.getCurrentUser().getUid();
+        users.document(id).get().addOnSuccessListener(doc -> {
+            if (doc.getData().get("bookings") == null) {
+                result = true;
+            }
+        });
+
+        return result;
     }
 
     @Nullable

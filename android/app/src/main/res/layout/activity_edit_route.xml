@@ -171,7 +171,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <EditText
-                        android:id="@+id/idSeatNumber"
+                        android:id="@+id/idSeatNumberEdit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/light_grey_2"
@@ -196,7 +196,7 @@
                         android:textColorHint="@color/light_grey_2"
                         android:textCursorDrawable="@null"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/idSeatNumber" />
+                        app:layout_constraintTop_toBottomOf="@id/idSeatNumberEdit" />
 
                     <EditText
                         android:id="@+id/idPrice"

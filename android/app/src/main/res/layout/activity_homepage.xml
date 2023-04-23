@@ -40,7 +40,7 @@
         app:srcCompat="@drawable/ic_baseline_find_replace_24" />
 
     <ImageButton
-        android:id="@+id/imgBtn_huyve"
+        android:id="@+id/imgBtn_quanLyUser"
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:layout_marginTop="32dp"
@@ -61,7 +61,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imgbtn_xemthongtin" />
 
     <TextView
-        android:id="@+id/tv_huyve"
+        android:id="@+id/tv_quanLyUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -69,7 +69,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.552"
         app:layout_constraintStart_toEndOf="@+id/tv_datve"
-        app:layout_constraintTop_toBottomOf="@+id/imgBtn_huyve" />
+        app:layout_constraintTop_toBottomOf="@+id/imgBtn_quanLyUser" />
 
     <TextView
         android:id="@+id/tv_timtuyen"
@@ -77,7 +77,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Quản lý tuyến"
-        app:layout_constraintEnd_toEndOf="@+id/imgBtn_timtuyen"
+        app:layout_constraintEnd_toEndOf="@+id/imgBtn_quanLyTuyen"
         app:layout_constraintStart_toStartOf="@+id/imgBtn_quanLyTuyen"
         app:layout_constraintTop_toBottomOf="@+id/imgBtn_quanLyTuyen" />
 

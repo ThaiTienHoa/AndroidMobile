@@ -42,6 +42,14 @@
             android:exported="true"
             android:theme="@style/Theme.Material3.Light.NoActionBar" />
         <activity
+            android:name=".acitivites.listRoute.ListRouteActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
+        <activity
+            android:name=".acitivites.manageUser.ManagerUserActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
+        <activity
             android:name=".acitivites.payments.PaymentsActivity"
             android:exported="true"
             android:theme="@style/Theme.Material3.Light.NoActionBar" />

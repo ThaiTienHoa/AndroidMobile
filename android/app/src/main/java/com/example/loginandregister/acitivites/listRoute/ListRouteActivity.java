@@ -1,35 +1,37 @@
-package com.example.loginandregister.acitivites.route;
+package com.example.loginandregister.acitivites.listRoute;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.loginandregister.MainActivity;
 import com.example.loginandregister.R;
+
+import com.example.loginandregister.acitivites.editRoute.EditRouteActivity;
+import com.example.loginandregister.acitivites.manageUser.ManageUserAdapter;
+import com.example.loginandregister.acitivites.route.RouteAdapter;
 import com.example.loginandregister.acitivites.seat.SeatSelectionActivity;
 import com.example.loginandregister.model.RouteModel;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-public class RouteListActivity extends AppCompatActivity implements OnBusItemListener {
+public class ListRouteActivity extends AppCompatActivity implements OnBusItemListener {
 
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -41,13 +43,18 @@ public class RouteListActivity extends AppCompatActivity implements OnBusItemLis
     List<RouteModel> listOfRoute = new ArrayList<RouteModel>();
     String TAG = "Travel APP";
 
-    RouteAdapter adapter;
+    ListRouteAdapter adapter;
+
+    FloatingActionButton btnAddRoute;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_route_list);
-        adapter = new RouteAdapter(listOfRoute, this);
+        setContentView(R.layout.activity_list_route);
+        adapter = new ListRouteAdapter(listOfRoute, this);
+        btnAddRoute = findViewById(R.id.addRoute);
+
+        btnAddRoute.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), EditRouteActivity.class)));
         getAllStore();
         RecyclerView recyclerView = findViewById(R.id.recyclerviewBus);
         recyclerView.setAdapter(adapter);
@@ -69,17 +76,33 @@ public class RouteListActivity extends AppCompatActivity implements OnBusItemLis
         });
     }
 
+
     @Override
     public void onClick(RouteModel route) {
-        String id = auth.getCurrentUser().getUid();
-        userRef.document(id).get().addOnSuccessListener(doc -> {
-            if (doc.getData().get("bookings") != null) {
-                String bookingId = doc.getData().get("bookings").toString();
-                bookingRef.document(bookingId).update("busId", route.getId());
-            }
-        });
-        Intent intent = new Intent(this, SeatSelectionActivity.class);
+        Intent intent = new Intent(this, EditRouteActivity.class);
         intent.putExtra("busId", route.getId());
         startActivity(intent);
+    }
+
+    @Override
+    public void btnDelete(RouteModel route) {
+        userRef.get().addOnSuccessListener(query -> {
+            List<DocumentSnapshot> docs = query.getDocuments();
+            for (DocumentSnapshot doc : docs) {
+                String bookingId = (String) doc.get("bookings");
+                String userId = (String) doc.get("userId");
+                if (bookingId != null) {
+                    bookingRef.document(bookingId).get().addOnSuccessListener(docBus -> {
+                        String busId = (String) docBus.get("busId");
+                        if (busId.equals(route.getId())) ;
+                        userRef.document(userId).update("bookings", null);
+                    });
+                }
+            }
+        });
+        busRef.document(route.getId()).delete();
+        Toast.makeText(ListRouteActivity.this, "Deleted successfull", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        finish();
     }
 }
