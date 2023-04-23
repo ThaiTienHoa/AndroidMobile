@@ -100,6 +100,7 @@ public class PassengerDetailActivity extends AppCompatActivity {
         bookingRef.document(bookingId).update("seat_no", seatNo);
         bookingRef.document(bookingId).update("name", name);
         bookingRef.document(bookingId).update("age", age);
+        bookingRef.document(bookingId).update("busId", busId);
 
         Intent intent = new Intent(this, PaymentsActivity.class);
         intent.putExtra("busId", busId);
