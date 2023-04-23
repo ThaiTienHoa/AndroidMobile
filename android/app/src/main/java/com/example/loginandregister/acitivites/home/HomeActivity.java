@@ -42,7 +42,6 @@ public class HomeActivity extends AppCompatActivity {
 
     Calendar calendar;
 
-    boolean result = false;
 
     int currentMonth, currentDay, dayOfWeek;
 
@@ -108,21 +107,20 @@ public class HomeActivity extends AppCompatActivity {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!checkBooking()) {
-                    Toast.makeText(getApplicationContext(), "You had a ticket!!!", Toast.LENGTH_LONG).show();
-                    return;
-                }
                 String idCollection = bookings.document().getId();
 
                 BookingModel bookingModel = new BookingModel(
-                        etEnterDestination.getText().toString(),
                         etEnterSource.getText().toString(),
+                        etEnterDestination.getText().toString(),
                         idCollection,
                         ""
                 );
                 bookings.document(idCollection).set(bookingModel);
                 setBookingId(idCollection);
-                startActivity(new Intent(getApplicationContext(), RouteListActivity.class));
+                Intent intent = new Intent(getApplicationContext(), RouteListActivity.class);
+                intent.putExtra("from", etEnterSource.getText().toString());
+                intent.putExtra("to", etEnterDestination.getText().toString());
+                startActivity(intent);
             }
         });
     }
@@ -139,17 +137,6 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    private boolean checkBooking() {
-        String id = auth.getCurrentUser().getUid();
-        users.document(id).get().addOnSuccessListener(doc -> {
-            if (doc.getData().get("bookings") == null) {
-                result = true;
-            }
-        });
-
-        return result;
     }
 
     @Nullable

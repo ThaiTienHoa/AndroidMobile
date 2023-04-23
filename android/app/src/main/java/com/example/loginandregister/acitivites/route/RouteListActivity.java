@@ -47,8 +47,11 @@ public class RouteListActivity extends AppCompatActivity implements OnBusItemLis
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route_list);
+        String from = getIntent().getStringExtra("from");
+        String to = getIntent().getStringExtra("to");
+
         adapter = new RouteAdapter(listOfRoute, this);
-        getAllStore();
+        getAllStore(from, to);
         RecyclerView recyclerView = findViewById(R.id.recyclerviewBus);
         recyclerView.setAdapter(adapter);
 
@@ -56,13 +59,15 @@ public class RouteListActivity extends AppCompatActivity implements OnBusItemLis
         btnBack.setOnClickListener(view -> finish());
     }
 
-    private void getAllStore() {
+    private void getAllStore(String from, String to) {
         listOfRoute.clear();
         busRef.addSnapshotListener((value, error) -> {
             if (value != null && !value.isEmpty()) {
                 for (QueryDocumentSnapshot doc : value) {
                     RouteModel model = doc.toObject(RouteModel.class);
-                    listOfRoute.add(model);
+                    if (model.getFrom().equals(from) && model.getTo().equals(to)) {
+                        listOfRoute.add(model);
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }

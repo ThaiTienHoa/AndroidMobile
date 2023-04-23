@@ -30,7 +30,7 @@ public class PassengerDetailActivity extends AppCompatActivity {
 
     EditText etPassengerName, etPassengerEmail, etPassengerAge, etEnterPassengerMobile;
 
-    TextView tvBookingPrice, tvFrom, tvName;
+    TextView tvBookingPrice, tvFrom, tvName, tvTotalTime, tvDepArrTime;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

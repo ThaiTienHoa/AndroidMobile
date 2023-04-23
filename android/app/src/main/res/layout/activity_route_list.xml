@@ -22,14 +22,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvNoOfBuses"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="78 Buses Founded"
-        app:layout_constraintTop_toBottomOf="@id/tvBusListHeading" />
-
     <androidx.core.widget.NestedScrollView
         android:id="@+id/ivBusGraphics"
         android:layout_width="match_parent"
@@ -37,22 +29,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvNoOfBuses">
+        app:layout_constraintTop_toBottomOf="@+id/tvBusListHeading">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="78dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/bus_banner"
-                app:layout_constraintBottom_toTopOf="@id/recyclerviewBus"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-            <!--        app:layout_constraintTop_toBottomOf="@id/rlSelect" />-->
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerviewBus"

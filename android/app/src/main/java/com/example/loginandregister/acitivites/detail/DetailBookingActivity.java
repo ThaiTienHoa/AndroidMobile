@@ -96,6 +96,11 @@ public class DetailBookingActivity extends AppCompatActivity {
                     assert busId != null;
                     busRef.document(busId).get().addOnSuccessListener(busDoc -> {
                         String busName = (String) busDoc.get("name");
+                        String startTime = (String) busDoc.get("timingStart");
+                        String endTime = (String) busDoc.get("timingEnd");
+                        String travellingTime = (String) busDoc.get("travellingTime");
+                        tvTotalTime.setText(travellingTime + " hours to travel");
+                        tvDepArrTime.setText(startTime + "h - " + endTime + "h");
                         tvBusName.setText(busName);
                     });
                 });

@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_with_dark"
-    tools:context=".acitivites.passengerDetail.PassengerDetailActivity">
+    android:background="@color/grey_with_dark">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

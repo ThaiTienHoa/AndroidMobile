@@ -56,8 +56,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Xem thông tin vé"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tv_timtuyen"
+        app:layout_constraintEnd_toEndOf="@+id/imgbtn_xemthongtin"
+        app:layout_constraintStart_toStartOf="@+id/imgbtn_xemthongtin"
         app:layout_constraintTop_toBottomOf="@+id/imgbtn_xemthongtin" />
 
     <TextView
@@ -66,9 +66,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="Quản lý user"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.552"
-        app:layout_constraintStart_toEndOf="@+id/tv_datve"
+        app:layout_constraintEnd_toEndOf="@+id/imgBtn_quanLyUser"
+        app:layout_constraintStart_toStartOf="@+id/imgBtn_quanLyUser"
         app:layout_constraintTop_toBottomOf="@+id/imgBtn_quanLyUser" />
 
     <TextView
