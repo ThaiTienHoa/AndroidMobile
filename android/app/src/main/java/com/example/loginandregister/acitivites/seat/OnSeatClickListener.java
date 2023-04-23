@@ -1,7 +1,9 @@
 package com.example.loginandregister.acitivites.seat;
 
-interface OnSeatClickListener {
-    void onSeatSelected();
+import com.example.loginandregister.model.Seats;
 
-    void onSeatDeselected();
+interface OnSeatClickListener {
+    void onSeatSelected(Seats seats);
+
+    void onSeatDeselected(Seats seats);
 }

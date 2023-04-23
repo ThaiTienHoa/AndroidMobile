@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_with_dark"
+    tools:context=".acitivites.passengerDetail.PassengerDetailActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/materialRed"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvToolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_back_arrow_grey"
+            android:drawablePadding="15dp"
+            android:drawableTint="@color/white"
+            android:text="Information"
+            android:textColor="@color/white"
+            android:textSize="21sp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/busBookingCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="18dp">
+
+            <TextView
+                android:id="@+id/tvStartsfrom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Starts From "
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvBusBoarding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="Railway Station"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvStartsfrom" />
+
+            <ImageView
+                android:id="@+id/ivBusDestination"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:drawablePadding="10dp"
+                android:src="@drawable/forward_arrow"
+                app:layout_constraintBottom_toBottomOf="@id/tvBusBoarding"
+                app:layout_constraintStart_toEndOf="@id/tvBusBoarding"
+                app:layout_constraintTop_toBottomOf="@id/tvStartsfrom" />
+
+            <TextView
+                android:id="@+id/tvBusDestination"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:drawablePadding="10dp"
+                android:text="Swargate"
+                app:layout_constraintStart_toEndOf="@id/ivBusDestination"
+                app:layout_constraintTop_toBottomOf="@id/tvStartsfrom" />
+
+
+            <TextView
+                android:id="@+id/tvDepArrTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15:00 - 20:45"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvBusBoarding" />
+
+            <TextView
+                android:id="@+id/tvTotalTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="5dp"
+                android:text="5h 45m "
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvDepArrTime" />
+
+            <TextView
+                android:id="@+id/tvNoOfSeats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="5dp"
+                android:text="35 Seats"
+                app:layout_constraintStart_toEndOf="@id/tvTotalTime"
+                app:layout_constraintTop_toBottomOf="@id/tvDepArrTime" />
+
+            <TextView
+                android:id="@+id/tvBusName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:drawableStart="@drawable/select_boarding"
+                android:drawablePadding="5dp"
+                android:maxLines="1"
+                android:text="Travel Agency Names"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTotalTime" />
+
+            <TextView
+                android:id="@+id/tvEmail"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email: "
+                app:layout_constraintStart_toStartOf="@+id/tvBusName"
+                app:layout_constraintTop_toBottomOf="@+id/tvBusName" />
+
+            <TextView
+                android:id="@+id/tvMobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mobile phone: "
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="@+id/tvBusName"
+                app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
+
+            <TextView
+                android:id="@+id/tvAge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Age: "
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="@+id/tvBusName"
+                app:layout_constraintTop_toBottomOf="@+id/tvMobile" />
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name: "
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="@+id/tvBusName"
+                app:layout_constraintTop_toBottomOf="@+id/tvAge" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#F8DFE0" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Cancel ticket"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

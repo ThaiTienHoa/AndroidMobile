@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,6 +43,8 @@ public class SeatSelectionActivity extends AppCompatActivity implements OnSeatCl
 
     TextView tvTravelAgencyDetails, tvBusDetails;
 
+    Seats seats;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,13 +61,14 @@ public class SeatSelectionActivity extends AppCompatActivity implements OnSeatCl
         String busId = getIntent().getStringExtra("busId");
 
         getBusesData(busId);
-        btnSignUpFrag.setOnClickListener(new View
-                .OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btnSignUpFrag.setOnClickListener(view -> {
+            if (seats != null) {
                 Intent intent = new Intent(getApplicationContext(), PassengerDetailActivity.class);
                 intent.putExtra("busId", busId);
+                intent.putExtra("seat_no", seats.getSeat_no());
                 startActivity(intent);
+            } else {
+                Toast.makeText(getApplicationContext(), "Select your seat!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -79,10 +83,8 @@ public class SeatSelectionActivity extends AppCompatActivity implements OnSeatCl
                 ArrayList<HashMap<String, String>> seats = (ArrayList<HashMap<String, String>>) doc.getData().get("seats");
                 for (int i = 0; i < seats.size(); i++) {
                     String available = seats.get(i).get("available");
-                    String real_seat = seats.get(i).get("real_seat");
-                    String type = seats.get(i).get("type");
                     String seat_no = seats.get(i).get("seat_no");
-                    Seats item = new Seats(available, real_seat, seat_no, type);
+                    Seats item = new Seats(available, seat_no);
                     listOfRoute.add(item);
                 }
                 String name = (String) doc.getData().get("name");
@@ -96,12 +98,14 @@ public class SeatSelectionActivity extends AppCompatActivity implements OnSeatCl
     }
 
     @Override
-    public void onSeatSelected() {
+    public void onSeatSelected(Seats seats) {
+        this.seats = seats;
         btnSignUpFrag.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void onSeatDeselected() {
+    public void onSeatDeselected(Seats seats) {
+        this.seats = null;
         btnSignUpFrag.setVisibility(View.GONE);
     }
 }

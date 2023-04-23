@@ -66,38 +66,23 @@ public class RouteSeatAdapter extends RecyclerView.Adapter<RouteSeatAdapter.View
                     if (seatItem.isSelected()) {
                         seatItem.setSelected(false);
                         imageSeat.setBackgroundResource(R.drawable.ic_seat_selected);
-                        listener.onSeatSelected();
+                        listener.onSeatSelected(seats);
                     } else {
                         seatItem.setSelected(true);
                         setSeatIcon(seats, imageSeat, seatItem);
-                        listener.onSeatDeselected();
+                        listener.onSeatDeselected(seats);
                     }
                 }
             });
         }
 
         private void setSeatIcon(Seats seats, ImageView seatIcon, LinearLayout seat) {
-            if (seats.getReal_seat().equals("yes")) {
-                if (seats.getType().equals("female")) {
-                    if (seats.getAvailable().equals("yes")) {
-                        seatIcon.setBackgroundResource(R.drawable.ic_seat_female_available);
-                    } else {
-                        seat.setClickable(false);
-                        seatIcon.setClickable(false);
-                        seatIcon.setBackgroundResource(R.drawable.ic_seat_female_booked);
-                    }
-                } else {
-                    if (seats.getAvailable().equals("yes")) {
-                        seatIcon.setBackgroundResource(R.drawable.ic_seat_available);
-                    } else {
-                        seat.setClickable(false);
-                        seatIcon.setClickable(false);
-                        seatIcon.setBackgroundResource(R.drawable.ic_seat_booked);
-                    }
-                }
+            if (seats.getAvailable().equals("yes")) {
+                seatIcon.setBackgroundResource(R.drawable.ic_seat_available);
             } else {
                 seat.setClickable(false);
                 seatIcon.setClickable(false);
+                seatIcon.setBackgroundResource(R.drawable.ic_seat_booked);
             }
         }
     }

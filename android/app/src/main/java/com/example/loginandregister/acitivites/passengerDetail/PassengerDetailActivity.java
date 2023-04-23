@@ -52,23 +52,24 @@ public class PassengerDetailActivity extends AppCompatActivity {
         tvName = findViewById(R.id.tvName);
 
         String busId = getIntent().getStringExtra("busId");
+        String seatNo = getIntent().getStringExtra("seat_no");
         getBusesData(busId);
         btnProcess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getBookingId(busId);
+                getBookingId(busId, seatNo);
             }
         });
     }
 
-    private void getBookingId(String busId) {
+    private void getBookingId(String busId, String seatNo) {
         String id = auth.getCurrentUser().getUid();
         userRef.document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot doc) {
                 if (doc.getData().get("bookings") != null) {
                     String bookingId = doc.getData().get("bookings").toString();
-                    setBookingsData(bookingId, busId);
+                    setBookingsData(bookingId, busId, seatNo);
                 }
             }
         });
@@ -87,7 +88,7 @@ public class PassengerDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void setBookingsData(String bookingId, String busId) {
+    private void setBookingsData(String bookingId, String busId, String seatNo) {
 
         String name = etPassengerName.getText().toString();
         String age = etPassengerAge.getText().toString();
@@ -105,6 +106,7 @@ public class PassengerDetailActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, PaymentsActivity.class);
         intent.putExtra("busId", busId);
+        intent.putExtra("seat_no", seatNo);
         startActivity(intent);
     }
 }
