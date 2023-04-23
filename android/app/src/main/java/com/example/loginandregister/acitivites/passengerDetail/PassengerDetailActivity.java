@@ -97,12 +97,9 @@ public class PassengerDetailActivity extends AppCompatActivity {
 
         bookingRef.document(bookingId).update("email", email);
         bookingRef.document(bookingId).update("mobile", phone);
-
-        HashMap<String, String> data = new HashMap();
-        data.put("name", name);
-        data.put("age", age);
-
-        bookingRef.document(bookingId).collection("passenger").add(data);
+        bookingRef.document(bookingId).update("seat_no", seatNo);
+        bookingRef.document(bookingId).update("name", name);
+        bookingRef.document(bookingId).update("age", age);
 
         Intent intent = new Intent(this, PaymentsActivity.class);
         intent.putExtra("busId", busId);

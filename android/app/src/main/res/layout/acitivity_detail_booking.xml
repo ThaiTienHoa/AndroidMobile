@@ -104,15 +104,6 @@
                 app:layout_constraintTop_toBottomOf="@id/tvDepArrTime" />
 
             <TextView
-                android:id="@+id/tvNoOfSeats"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="5dp"
-                android:text="35 Seats"
-                app:layout_constraintStart_toEndOf="@id/tvTotalTime"
-                app:layout_constraintTop_toBottomOf="@id/tvDepArrTime" />
-
-            <TextView
                 android:id="@+id/tvBusName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -127,20 +118,32 @@
                 app:layout_constraintTop_toBottomOf="@id/tvTotalTime" />
 
             <TextView
+                android:id="@+id/tvSeatNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dp"
+                android:maxLines="1"
+                android:text="Seat No :"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvBusName" />
+
+            <TextView
                 android:id="@+id/tvEmail"
-                android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Email: "
+                android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="@+id/tvBusName"
-                app:layout_constraintTop_toBottomOf="@+id/tvBusName" />
+                app:layout_constraintTop_toBottomOf="@+id/tvSeatNo" />
 
             <TextView
                 android:id="@+id/tvMobile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mobile phone: "
                 android:layout_marginTop="10dp"
+                android:text="Mobile phone: "
                 app:layout_constraintStart_toStartOf="@+id/tvBusName"
                 app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
 
@@ -148,16 +151,17 @@
                 android:id="@+id/tvAge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Age: "
                 android:layout_marginTop="10dp"
+                android:text="Age: "
                 app:layout_constraintStart_toStartOf="@+id/tvBusName"
                 app:layout_constraintTop_toBottomOf="@+id/tvMobile" />
+
             <TextView
                 android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name: "
                 android:layout_marginTop="10dp"
+                android:text="Name: "
                 app:layout_constraintStart_toStartOf="@+id/tvBusName"
                 app:layout_constraintTop_toBottomOf="@+id/tvAge" />
 

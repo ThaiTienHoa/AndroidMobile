@@ -23,8 +23,8 @@ public class DetailBookingActivity extends AppCompatActivity {
     CollectionReference bookingRef = db.collection("bookings");
     CollectionReference userRef = db.collection("users");
 
-    TextView tvBusBoarding, tvBusDestination, tvDepArrTime, tvTotalTime, tvNoOfSeats;
-    TextView tvBusName, tvEmail, tvMobile, tvAge, tvName;
+    TextView tvBusBoarding, tvBusDestination, tvDepArrTime, tvTotalTime;
+    TextView tvBusName, tvEmail, tvMobile, tvAge, tvName, tvSeatNo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class DetailBookingActivity extends AppCompatActivity {
         tvBusDestination = findViewById(R.id.tvBusDestination);
         tvDepArrTime = findViewById(R.id.tvDepArrTime);
         tvTotalTime = findViewById(R.id.tvTotalTime);
-        tvNoOfSeats = findViewById(R.id.tvNoOfSeats);
+        tvSeatNo = findViewById(R.id.tvSeatNo);
         tvBusName = findViewById(R.id.tvBusName);
         tvEmail = findViewById(R.id.tvEmail);
         tvMobile = findViewById(R.id.tvMobile);
@@ -53,17 +53,25 @@ public class DetailBookingActivity extends AppCompatActivity {
                         String mobile = (String) doc.getData().get("mobile");
                         String from = (String) doc.getData().get("from");
                         String to = (String) doc.getData().get("to");
-                        tvEmail.setText(email);
-                        tvMobile.setText(mobile);
+                        String seatNo = (String) doc.getData().get("seat_no");
+                        tvEmail.setText("Email: " + email);
+                        tvMobile.setText("Mobile phone: " + mobile);
                         tvBusBoarding.setText(from);
                         tvBusDestination.setText(to);
-                    }
-                });
-                bookingRef.document(bookingId).collection("passenger").document().get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot doc) {
+                        tvSeatNo.setText(seatNo);
+
                         String age = (String) doc.getData().get("age");
                         String name = (String) doc.getData().get("name");
+                        tvAge.setText("Age: " + age);
+                        tvName.setText("Name: " + name);
+                        assert busId != null;
+                        busRef.document(busId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot busDoc) {
+                                String busName = (String) busDoc.get("name");
+                                tvName.setText(busName);
+                            }
+                        });
                     }
                 });
             }
