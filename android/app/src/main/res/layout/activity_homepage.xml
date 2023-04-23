@@ -20,16 +20,15 @@
         android:id="@+id/imgbtn_xemthongtin"
         android:layout_width="65dp"
         android:layout_height="65dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="32dp"
         android:contentDescription="@string/app_name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.517"
-        app:layout_constraintStart_toEndOf="@+id/imgBtn_timtuyen"
-        app:layout_constraintTop_toBottomOf="@+id/imgBtn_huyve"
+        app:layout_constraintStart_toEndOf="@+id/imgBtn_datve"
+        app:layout_constraintTop_toBottomOf="@+id/view2"
         app:srcCompat="@drawable/ic_baseline_menu_book_24" />
 
     <ImageButton
-        android:id="@+id/imgBtn_timtuyen"
+        android:id="@+id/imgBtn_quanLyTuyen"
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:layout_marginTop="32dp"
@@ -47,9 +46,8 @@
         android:layout_marginTop="32dp"
         android:contentDescription="@string/app_name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.524"
-        app:layout_constraintStart_toEndOf="@+id/imgBtn_datve"
-        app:layout_constraintTop_toBottomOf="@+id/view2"
+        app:layout_constraintStart_toEndOf="@+id/imgBtn_quanLyTuyen"
+        app:layout_constraintTop_toTopOf="@+id/tv_xemthongtin"
         app:srcCompat="@drawable/ic_baseline_cancel_24" />
 
     <TextView
@@ -67,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="Hủy vé"
+        android:text="Quản lý user"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.552"
         app:layout_constraintStart_toEndOf="@+id/tv_datve"
@@ -78,11 +76,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Tìm tuyến"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.247"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgBtn_timtuyen" />
+        android:text="Quản lý tuyến"
+        app:layout_constraintEnd_toEndOf="@+id/imgBtn_timtuyen"
+        app:layout_constraintStart_toStartOf="@+id/imgBtn_quanLyTuyen"
+        app:layout_constraintTop_toBottomOf="@+id/imgBtn_quanLyTuyen" />
 
     <TextView
         android:id="@+id/tv_datve"

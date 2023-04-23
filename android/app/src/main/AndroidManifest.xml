@@ -36,6 +36,11 @@
             android:name=".acitivites.detail.DetailBookingActivity"
             android:exported="true"
             android:theme="@style/Theme.Material3.Light.NoActionBar" />
+
+        <activity
+            android:name=".acitivites.editRoute.EditRouteActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
         <activity
             android:name=".acitivites.payments.PaymentsActivity"
             android:exported="true"

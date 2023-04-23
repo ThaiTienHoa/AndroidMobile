@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.loginandregister.R;
+import com.example.loginandregister.acitivites.editRoute.EditRouteActivity;
 import com.example.loginandregister.model.Location;
 
 import java.util.ArrayList;
@@ -35,6 +36,8 @@ public class LocationSearchActivity extends AppCompatActivity implements Locatio
     private String idD;
     private String nameD;
 
+    private String screen;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +48,7 @@ public class LocationSearchActivity extends AppCompatActivity implements Locatio
         btnBack.setOnClickListener(view -> finish());
 
         flag = getIntent().getStringExtra("flag");
+        screen = getIntent().getStringExtra("screen");
         idS = getIntent().getStringExtra("idS");
         nameS = getIntent().getStringExtra("nameS");
         idD = getIntent().getStringExtra("idD");
@@ -67,7 +71,12 @@ public class LocationSearchActivity extends AppCompatActivity implements Locatio
     @Override
     public void onClick(Location location) {
         Log.d("###", "CLick");
-        Intent intent = new Intent(LocationSearchActivity.this, HomeActivity.class);
+        Intent intent = null;
+        if (screen.equals("home")) {
+            intent = new Intent(LocationSearchActivity.this, HomeActivity.class);
+        } else if (screen.equals("edit")) {
+            intent = new Intent(LocationSearchActivity.this, EditRouteActivity.class);
+        }
         if (flag.equals("source")) {
             idS = location.getId();
             nameS = location.getName();
@@ -80,6 +89,7 @@ public class LocationSearchActivity extends AppCompatActivity implements Locatio
         intent.putExtra("nameS", nameS);
         intent.putExtra("idD", idD);
         intent.putExtra("nameD", nameD);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
     }

@@ -78,6 +78,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this, LocationSearchActivity.class);
                 intent.putExtra("flag", "source");
+                intent.putExtra("screen", "home");
                 intent.putExtra("idS", sourceLocation.getId());
                 intent.putExtra("nameS", sourceLocation.getName());
                 intent.putExtra("idD", destinationLocation.getId());
@@ -91,6 +92,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this, LocationSearchActivity.class);
                 intent.putExtra("flag", "destination");
+                intent.putExtra("screen", "home");
                 intent.putExtra("idS", sourceLocation.getId());
                 intent.putExtra("nameS", sourceLocation.getName());
                 intent.putExtra("idD", destinationLocation.getId());

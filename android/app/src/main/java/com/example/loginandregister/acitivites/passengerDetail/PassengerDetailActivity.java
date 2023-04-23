@@ -12,16 +12,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.loginandregister.R;
 import com.example.loginandregister.acitivites.payments.PaymentsActivity;
-import com.example.loginandregister.acitivites.seat.SeatSelectionActivity;
-import com.example.loginandregister.model.Seats;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class PassengerDetailActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -45,7 +40,7 @@ public class PassengerDetailActivity extends AppCompatActivity {
         btnProcess = findViewById(R.id.btnProceed);
         etPassengerName = findViewById(R.id.etPassengerName);
         etPassengerEmail = findViewById(R.id.etPassengerEmail);
-        etPassengerAge = findViewById(R.id.etPassengerAge);
+        etPassengerAge = findViewById(R.id.idDescription);
         etEnterPassengerMobile = findViewById(R.id.etEnterPassengerMobile);
         tvBookingPrice = findViewById(R.id.tvBookingPrice);
         tvFrom = findViewById(R.id.tvFrom);

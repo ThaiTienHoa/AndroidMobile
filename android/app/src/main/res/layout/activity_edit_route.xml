@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey_with_dark"
-    tools:context=".acitivites.passengerDetail.PassengerDetailActivity">
+    tools:context=".acitivites.editRoute.EditRouteActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -24,63 +24,11 @@
             android:drawableLeft="@drawable/ic_back_arrow_grey"
             android:drawablePadding="15dp"
             android:drawableTint="@color/white"
-            android:text="Information"
+            android:text="Edit route"
             android:textColor="@color/white"
             android:textSize="21sp" />
 
     </androidx.appcompat.widget.Toolbar>
-
-    <RelativeLayout
-        android:id="@+id/cardBottomToolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/grey1"
-        android:padding="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
-
-        <TextView
-            android:id="@+id/tvLabelBusOnRoute"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Route"
-            android:textColor="@color/dark_grey" />
-
-        <TextView
-            android:id="@+id/tvLabelNext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvLabelBusOnRoute"
-            android:text="From: "
-            android:textColor="@color/dark_grey" />
-
-        <TextView
-            android:id="@+id/tvFrom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvLabelBusOnRoute"
-            android:layout_toRightOf="@id/tvLabelNext"
-            android:text="Railway Station"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:text="Name"
-            android:textColor="@color/dark_grey" />
-
-        <TextView
-            android:id="@+id/tvName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvLabelBusOnRoute"
-            android:layout_alignParentEnd="true"
-            android:text="Railway Station"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
-    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -88,7 +36,7 @@
         android:scrollbars="none"
         app:layout_constraintBottom_toTopOf="@id/bottomBar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardBottomToolbar">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -99,7 +47,7 @@
                 android:id="@+id/tvLabelContact"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Contact Information"
+                android:text="Route information"
                 android:textColor="@color/black"
                 android:textSize="17sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -124,14 +72,15 @@
                     android:paddingVertical="30dp">
 
                     <EditText
-                        android:id="@+id/etPassengerEmail"
+                        android:id="@+id/idStartPoint"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/light_grey_2"
                         android:drawablePadding="20dp"
                         android:drawableTint="@color/light_grey"
-                        android:hint="Email ID"
-                        android:inputType="textEmailAddress"
+                        android:focusable="false"
+                        android:hint="Start point"
+                        android:inputType="text"
                         android:padding="12dp"
                         android:textColor="@color/black"
                         android:textColorHint="@color/light_grey_2"
@@ -140,21 +89,39 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <EditText
-                        android:id="@+id/etEnterPassengerMobile"
+                        android:id="@+id/idEndPoint"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:backgroundTint="@color/light_grey_2"
                         android:drawablePadding="20dp"
                         android:drawableTint="@color/light_grey"
-                        android:hint="Mobile Number"
-                        android:inputType="phone"
+                        android:focusable="false"
+                        android:hint="End route"
+                        android:inputType="text"
                         android:padding="12dp"
                         android:textColor="@color/black"
                         android:textColorHint="@color/light_grey_2"
                         android:textCursorDrawable="@null"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/etPassengerEmail" />
+                        app:layout_constraintTop_toBottomOf="@id/idStartPoint" />
+
+                    <EditText
+                        android:id="@+id/idAdrress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:backgroundTint="@color/light_grey_2"
+                        android:drawablePadding="20dp"
+                        android:drawableTint="@color/light_grey"
+                        android:hint="Address"
+                        android:inputType="text"
+                        android:padding="12dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/light_grey_2"
+                        android:textCursorDrawable="@null"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/idEndPoint" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -165,12 +132,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Passenger Information"
+                android:text="Train Information"
                 android:textColor="@color/black"
                 android:textSize="17sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cvContact" />
-
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvPassengerInfo"
@@ -191,12 +157,12 @@
                     android:paddingVertical="30dp">
 
                     <EditText
-                        android:id="@+id/etPassengerName"
+                        android:id="@+id/idBusName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/light_grey_2"
-                        android:hint="Name"
-                        android:inputType="textPersonName"
+                        android:hint="Train name"
+                        android:inputType="text"
                         android:padding="12dp"
                         android:textColor="@color/black"
                         android:textColorHint="@color/light_grey_2"
@@ -205,81 +171,75 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <EditText
-                        android:id="@+id/idDescription"
+                        android:id="@+id/idSeatNumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
                         android:backgroundTint="@color/light_grey_2"
-                        android:hint="Age"
+                        android:hint="Seat number"
                         android:inputType="number"
                         android:padding="12dp"
                         android:textColor="@color/black"
                         android:textColorHint="@color/light_grey_2"
                         android:textCursorDrawable="@null"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/etPassengerName" />
+                        app:layout_constraintTop_toBottomOf="@+id/idBusName" />
 
-                    <TextView
-                        android:id="@+id/tvGender"
+                    <EditText
+                        android:id="@+id/idDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Gender"
-                        android:textColor="@color/light_grey_2"
-                        android:textSize="17sp"
+                        android:backgroundTint="@color/light_grey_2"
+                        android:hint="Description"
+                        android:inputType="text"
+                        android:padding="12dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/light_grey_2"
+                        android:textCursorDrawable="@null"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/idDescription" />
+                        app:layout_constraintTop_toBottomOf="@id/idSeatNumber" />
 
-                    <RadioGroup
-                        android:id="@+id/radioGroup"
+                    <EditText
+                        android:id="@+id/idPrice"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:orientation="horizontal"
+                        android:backgroundTint="@color/light_grey_2"
+                        android:hint="Price of seat"
+                        android:inputType="number"
+                        android:padding="12dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/light_grey_2"
+                        android:textCursorDrawable="@null"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvGender">
+                        app:layout_constraintTop_toBottomOf="@+id/idDescription" />
 
-                        <!-- In RadioGroup create the 1 Radio Button-->
-                        <!-- like this we will add some more Radio Button-->
-                        <RadioButton
-                            android:id="@+id/rdMale"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="@color/materialRed"
-                            android:padding="3dp"
-                            android:scaleX="0.7"
-                            android:scaleY="0.7"
-                            android:text="Male"
-                            android:textColor="@color/light_grey"
-                            android:textSize="18dp" />
+                    <EditText
+                        android:id="@+id/idStartTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/light_grey_2"
+                        android:hint="Start time"
+                        android:inputType="number"
+                        android:padding="12dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/light_grey_2"
+                        android:textCursorDrawable="@null"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/idPrice" />
 
-                        <RadioButton
-                            android:id="@+id/rdFemale"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="@color/materialRed"
-                            android:padding="3dp"
-                            android:scaleX="0.7"
-                            android:scaleY="0.7"
-                            android:text="Female"
-                            android:textColor="@color/light_grey"
-                            android:textSize="18dp" />
+                    <EditText
+                        android:id="@+id/idEndTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/light_grey_2"
+                        android:hint="End time"
+                        android:inputType="number"
+                        android:padding="12dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/light_grey_2"
+                        android:textCursorDrawable="@null"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/idStartTime" />
 
-
-                        <RadioButton
-                            android:id="@+id/rdOther"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="@color/materialRed"
-                            android:padding="3dp"
-                            android:scaleX="0.7"
-                            android:scaleY="0.7"
-                            android:text="Other"
-                            android:textColor="@color/light_grey"
-                            android:textSize="18dp" />
-
-                    </RadioGroup>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
@@ -296,36 +256,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/tvBookingPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="10dp"
-            android:drawablePadding="10dp"
-            android:text="299.0"
-            android:textColor="@color/materialRed"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/bottomBar" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:drawablePadding="10dp"
-            android:text="(Excluding taxes)"
-            android:textColor="@color/light_grey"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvBookingPrice" />
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnProceed"
-            android:layout_width="140dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_alignParentEnd="true"
+            android:layout_margin="10dp"
             android:text="PROCEED"
             app:cornerRadius="0dp"
             app:layout_constraintBottom_toBottomOf="@id/bottomBar"
