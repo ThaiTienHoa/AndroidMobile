@@ -57,6 +57,7 @@ public class PassengerDetailActivity extends AppCompatActivity {
     }
 
     private void getBusesData(String busId) {
+        //Lấy thông tin vé
         busRef.document(busId).get().addOnSuccessListener(doc -> {
             if (doc != null) {
                 String from = (String) doc.getData().get("from");
@@ -75,7 +76,7 @@ public class PassengerDetailActivity extends AppCompatActivity {
         String age = etPassengerAge.getText().toString();
         String email = etPassengerEmail.getText().toString();
         String phone = etEnterPassengerMobile.getText().toString();
-
+        // Đóng gói thông tin của vé đã đặt và gửi đến Payment
         Intent intent = new Intent(this, PaymentsActivity.class);
         intent.putExtra("email", email);
         intent.putExtra("mobile", phone);

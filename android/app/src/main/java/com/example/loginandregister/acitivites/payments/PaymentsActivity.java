@@ -25,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.List;
 
+//Thanh toán cập nhật thông tin tuyến xe
 public class PaymentsActivity extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -59,16 +60,16 @@ public class PaymentsActivity extends AppCompatActivity {
         String seatNo = getIntent().getStringExtra("seat_no");
         getBusesData(busId);
         btnDone.setOnClickListener(view -> {
-            String idBooking = createOrder(from, to);
-            updateSeat(busId, seatNo);
-            updateBusIdForUser(busId);
-            setBookingData(idBooking, busId, email, mobile, name, age, seatNo);
+            String idBooking = createOrder(from, to); //Tạo một đơn mới
+            updateSeat(busId, seatNo); //Cập nhật trạng thái ghế ngồi
+            updateBusIdForUser(busId); //Cập nhật mã chuyến xe
+            setBookingData(idBooking, busId, email, mobile, name, age, seatNo); //Lưu thông tin đặt vé vào cơ sở dữ liệu
             Toast.makeText(getApplicationContext(), "Your order sucessfull", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            startActivity(new Intent(getApplicationContext(), MainActivity.class)); //Chuyển đến màn hình chính
         });
     }
 
-    private void getBusesData(String busId) {
+    private void getBusesData(String busId) { //truy vấn collection "buses" trong database Firestore + ID
         busRef.document(busId).get().addOnSuccessListener(doc -> {
             if (doc != null) {
                 from = (String) doc.getData().get("from");
@@ -76,8 +77,8 @@ public class PaymentsActivity extends AppCompatActivity {
                 travellingTime = (String) doc.getData().get("travellingTime");
                 price = (String) doc.getData().get("price");
                 timingStart = (String) doc.getData().get("timingStart");
-                timingEnd = (String) doc.getData().get("timingEnd");
-                tvStartingPoint.setText(from);
+                timingEnd = (String) doc.getData().get("timingEnd"); // Lấy thông tin
+                tvStartingPoint.setText(from); // Gán vào giao diện người dùng
                 tvEndingPoint.setText(to);
                 textView5.setText(travellingTime);
                 tvStartTime.setText(timingStart);
@@ -87,29 +88,31 @@ public class PaymentsActivity extends AppCompatActivity {
         });
     }
 
+    // Tạo đơn mới
     private String createOrder(String from, String to) {
-        String idCollection = bookingRef.document().getId();
-        BookingModel bookingModel = new BookingModel(
+        String idCollection = bookingRef.document().getId(); //Lấy Id từ firestore
+        BookingModel bookingModel = new BookingModel( //Tạo đối tượng
                 from,
                 to,
                 idCollection,
                 ""
         );
-        bookingRef.document(idCollection).set(bookingModel);
+        bookingRef.document(idCollection).set(bookingModel); //Lưu vào Firestore
         setBookingId(idCollection);
         return idCollection;
     }
 
     private void updateBusIdForUser(String busId) {
-        String id = auth.getCurrentUser().getUid();
-        userRef.document(id).get().addOnSuccessListener(doc -> {
+        String id = auth.getCurrentUser().getUid(); //Lấy id user đang đăng nhập
+        userRef.document(id).get().addOnSuccessListener(doc -> { //truy vấn tới thông tin người dùng
             if (doc.getData().get("bookings") != null) {
                 String bookingId = doc.getData().get("bookings").toString();
-                bookingRef.document(bookingId).update("busId", busId);
+                bookingRef.document(bookingId).update("busId", busId); //Cập nhật busID cho user
             }
         });
     }
 
+    //lưu mã đặt chỗ (bookingId) vào tài khoản người dùng hiện tại
     private void setBookingId(String bookingId) {
         String id = auth.getCurrentUser().getUid();
         userRef.document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -124,6 +127,7 @@ public class PaymentsActivity extends AppCompatActivity {
         });
     }
 
+    //Cập nhật thông tin booking
     private void setBookingData(String bookingId, String busId, String email, String phone, String name, String age, String seatNo) {
         bookingRef.document(bookingId).update("email", email);
         bookingRef.document(bookingId).update("mobile", phone);
@@ -136,17 +140,19 @@ public class PaymentsActivity extends AppCompatActivity {
     private void updateSeat(String busId, String seatNo) {
         busRef.document(busId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(DocumentSnapshot doc) {
+            public void onSuccess(DocumentSnapshot doc) { //Kiểm tra xem bus đã tồn tại chưa
                 if (doc != null) {
                     int index = -1;
                     List<HashMap<String, Object>> seats = (List<HashMap<String, Object>>) doc.getData().get("seats");
+                    //Lấy danh sách ghế từ bus,
+                    // Mỗi thông tin tử trong mảng hashmap chứa trạng thái và số ghế
                     for (int i = 0; i < seats.size(); i++) {
                         HashMap<String, Object> seat = seats.get(i);
                         if (seat.get("seat_no").equals(seatNo)) {
                             index = i;
                             HashMap<String, Object> newData = new HashMap<>();
-                            newData.put("available", "no");
-                            newData.put("seat_no", seatNo);
+                            newData.put("available", "no"); //Cập nhật đã đặt
+                            newData.put("seat_no", seatNo); //Cập nhật số ghế
                             seats.set(i, newData);
                             break;
                         }
@@ -156,13 +162,13 @@ public class PaymentsActivity extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Log.d("Update seats", "Cập nhật thành công");
+                                        Log.d("Update seats", "Cập nhật thành công"); //Cập nhật thành công thông báo thành công
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(Exception e) {
-                                        Log.w("Update seats", "Cập nhật thất bại", e);
+                                        Log.w("Update seats", "Cập nhật thất bại", e); //Cập nhật thất bại thông báo thất bại
                                     }
                                 });
                     }
