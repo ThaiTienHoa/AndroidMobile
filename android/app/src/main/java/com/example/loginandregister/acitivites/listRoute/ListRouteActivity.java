@@ -2,6 +2,7 @@ package com.example.loginandregister.acitivites.listRoute;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +28,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +56,7 @@ public class ListRouteActivity extends AppCompatActivity implements OnBusItemLis
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_route);
+        checkAutoDeleteRoute();
         adapter = new ListRouteAdapter(listOfRoute, this);
         btnAddRoute = findViewById(R.id.addRoute);
 
@@ -76,9 +82,47 @@ public class ListRouteActivity extends AppCompatActivity implements OnBusItemLis
         });
     }
 
+    private void checkAutoDeleteRoute() {
+        busRef.addSnapshotListener((value, error) -> {
+            if (value != null && !value.isEmpty()) {
+                for (QueryDocumentSnapshot doc : value) {
+                    RouteModel model = doc.toObject(RouteModel.class);
+                    if (hasPassedOneDay(model.getDateStart())) {
+                        Log.d("####", "Da qua");
+                        btnDelete(model);
+                    } else {
+                        Log.d("####", "Chuaw qua");
+                    }
+                }
+            }
+        });
+    }
+
+    public boolean hasPassedOneDay(String dateString) {
+        // Định dạng ngày
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+
+        try {
+            // Chuyển chuỗi thành đối tượng Date
+            Date dateToCompare = dateFormat.parse(dateString);
+
+            // Lấy thời gian hiện tại
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DAY_OF_YEAR, -1); // Giảm 1 ngày từ ngày hiện tại
+            Date yesterday = calendar.getTime();
+
+            // So sánh ngày
+            return dateToCompare.before(yesterday);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return false; // Trường hợp xảy ra lỗi, không thể so sánh
+    }
 
     @Override
     public void onClick(RouteModel route) {
+        Log.d("####", route.getId());
         Intent intent = new Intent(this, EditRouteActivity.class);
         intent.putExtra("busId", route.getId());
         startActivity(intent);

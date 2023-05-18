@@ -1,9 +1,10 @@
 package com.example.loginandregister.acitivites.editRoute;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.loginandregister.MainActivity;
 import com.example.loginandregister.R;
-import com.example.loginandregister.acitivites.home.HomeActivity;
 import com.example.loginandregister.acitivites.home.LocationSearchActivity;
 import com.example.loginandregister.model.Location;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.type.DateTime;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,7 +34,7 @@ public class EditRouteActivity extends AppCompatActivity {
 
     EditText idBusName, idSeatNumber, idDescription, idPrice;
 
-    EditText idStartTime, idEndTime;
+    EditText idDateStart, idDateEnd, idStartTime, idEndTime;
 
     MaterialButton btnProcess;
 
@@ -44,8 +45,18 @@ public class EditRouteActivity extends AppCompatActivity {
 
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    CollectionReference userRef = db.collection("users");
 
     CollectionReference busRef = db.collection("buses");
+
+    String dateStart = "";
+    String dateEnd = "";
+    String timeStart = "";
+    String timeEnd = "";
+
+    boolean isUpdate = false;
+
+    String busIdCurrent = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,8 +69,10 @@ public class EditRouteActivity extends AppCompatActivity {
         idSeatNumber = findViewById(R.id.idSeatNumberEdit);
         idDescription = findViewById(R.id.idDescription);
         idPrice = findViewById(R.id.idPrice);
-        idStartTime = findViewById(R.id.idStartTime);
-        idEndTime = findViewById(R.id.idEndTime);
+        idDateStart = findViewById(R.id.idDateStart);
+        idDateEnd = findViewById(R.id.idDateEnd);
+        idStartTime = findViewById(R.id.idTimeStart);
+        idEndTime = findViewById(R.id.idTimeEnd);
         btnProcess = findViewById(R.id.btnProceed);
         btnBack = findViewById(R.id.tvToolbarTitle);
         btnBack.setOnClickListener(view -> finish());
@@ -68,6 +81,7 @@ public class EditRouteActivity extends AppCompatActivity {
 
         String busId = getIntent().getStringExtra("busId");
         if (busId != null) {
+            busIdCurrent = busId;
             fetchBus(busId);
         }
 
@@ -111,6 +125,31 @@ public class EditRouteActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        idDateStart.setOnClickListener(view -> {
+            openDatePicker(value -> {
+                dateStart = value;
+                idDateStart.setText(value);
+            });
+        });
+        idStartTime.setOnClickListener(view -> {
+            openTimePicker(value -> {
+                timeStart = value;
+                idStartTime.setText(value);
+            });
+        });
+        idDateEnd.setOnClickListener(view -> {
+            openDatePicker(value -> {
+                dateEnd = value;
+                idDateEnd.setText(value);
+            });
+        });
+        idEndTime.setOnClickListener(view -> {
+            openTimePicker(value -> {
+                timeEnd = value;
+                idEndTime.setText(value);
+            });
+        });
     }
 
     private void saveRote() {
@@ -120,13 +159,13 @@ public class EditRouteActivity extends AppCompatActivity {
         data.put("description", idDescription.getText().toString());
         data.put("from", idStartPoint.getText().toString());
         data.put("to", idEndPoint.getText().toString());
-        data.put("id", idCollection);
+        data.put("id", isUpdate ? busIdCurrent : idCollection);
         data.put("name", idBusName.getText().toString());
         data.put("price", idPrice.getText().toString());
-        data.put("timingEnd", idStartTime.getText().toString());
-        data.put("timingStart", idEndTime.getText().toString());
-        int travelTime = Integer.parseInt(idStartTime.getText().toString()) - Integer.parseInt(idEndTime.getText().toString());
-        data.put("travellingTime", Math.abs(travelTime) + "");
+        data.put("dateStart", dateStart);
+        data.put("dateEnd", dateEnd);
+        data.put("timeStart", timeStart);
+        data.put("timeEnd", timeEnd);
 
         int seatNumber = Integer.parseInt(idSeatNumber.getText().toString());
         List<HashMap<String, String>> seats = new ArrayList<>();
@@ -137,9 +176,21 @@ public class EditRouteActivity extends AppCompatActivity {
             seats.add(seatItem);
         }
         data.put("seats", seats);
-        busRef.document(idCollection).set(data)
-                .addOnSuccessListener(unused -> Toast.makeText(getApplicationContext(),
-                        "Add route complete!!!", Toast.LENGTH_SHORT).show());
+        if (isUpdate) {
+            busRef.document(busIdCurrent).delete();
+            busRef.document(busIdCurrent).set(data)
+                    .addOnSuccessListener(unused -> {
+                        Toast.makeText(getApplicationContext(),
+                                "Add route complete!!!", Toast.LENGTH_SHORT).show();
+                    });
+        } else {
+            busRef.document(idCollection).set(data)
+                    .addOnSuccessListener(unused -> {
+                        Toast.makeText(getApplicationContext(),
+                                "Add route complete!!!", Toast.LENGTH_SHORT).show();
+                    });
+        }
+
 
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
     }
@@ -155,21 +206,60 @@ public class EditRouteActivity extends AppCompatActivity {
                 String to = (String) doc.get("to");
                 String busName = (String) doc.get("name");
                 String price = (String) doc.get("price");
-                String timingStart = (String) doc.get("timingStart");
-                String timingEnd = (String) doc.get("timingEnd");
-                String travellingTime = (String) doc.get("travellingTime");
+                String dateStart2 = (String) doc.get("dateStart");
+                String dateEnd2 = (String) doc.get("dateEnd");
+                String timeStart2 = (String) doc.get("timeStart");
+                String timeEnd2 = (String) doc.get("timeEnd");
+
+                dateStart = dateStart2;
+                dateEnd = dateEnd2;
+                timeStart = timeStart2;
+                timeEnd = timeEnd2;
+                isUpdate = true;
+
                 List<HashMap<String, String>> seats = (List<HashMap<String, String>>) doc.get("seats");
 
                 idAdrress.setText(address);
                 idDescription.setText(description);
                 idStartPoint.setText(from);
                 idEndPoint.setText(to);
-                idStartTime.setText(timingStart);
-                idEndTime.setText(timingEnd);
+                idDateStart.setText(dateStart2);
+                idDateEnd.setText(dateEnd2);
+                idStartTime.setText(timeStart2);
+                idEndTime.setText(timeEnd2);
                 idPrice.setText(price);
                 idBusName.setText(busName);
                 idSeatNumber.setText(seats.size() + "");
             }
         });
     }
+
+    private void openDatePicker(DateTimeCallBack callBack) {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                R.style.DialogTheme, (DatePickerDialog.OnDateSetListener) (datePicker, year, month, day) -> {
+
+            //Showing the picked value in the textView
+            //textView.setText();
+            String value = String.valueOf(year) + "." + String.valueOf(month + 1) + "." + String.valueOf(day);
+            callBack.callback(value);
+
+        }, 2023, 01, 20);
+
+        datePickerDialog.show();
+    }
+
+
+    private void openTimePicker(DateTimeCallBack callBack) {
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, R.style.DialogTheme,
+                (TimePickerDialog.OnTimeSetListener) (timePicker, hour, minute) -> {
+                    //Showing the picked value in the textView
+                    //textView.setText();
+                    String value = String.valueOf(hour) + ":" + String.valueOf(minute);
+                    callBack.callback(value);
+                }, 15, 30, false);
+
+        timePickerDialog.show();
+    }
+
 }

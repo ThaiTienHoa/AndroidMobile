@@ -10,11 +10,15 @@ public class RouteModel {
     private String to;
     private ArrayList<Seats> seats;
     private String price;
-    private String travellingTime;
-    private String timingStart;
-    private String timingEnd;
 
-    public RouteModel(String id, String name, String description, String from, String to, ArrayList<Seats> seats, String price, String travellingTime, String timingStart, String timingEnd) {
+    private String dateStart;
+    private String dateEnd;
+
+    private String timeStart;
+
+    private String timeEnd;
+
+    public RouteModel(String id, String name, String description, String from, String to, ArrayList<Seats> seats, String price, String dateStart, String dateEnd, String timeStart, String timeEnd) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -22,9 +26,10 @@ public class RouteModel {
         this.to = to;
         this.seats = seats;
         this.price = price;
-        this.travellingTime = travellingTime;
-        this.timingStart = timingStart;
-        this.timingEnd = timingEnd;
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
+        this.timeStart = timeStart;
+        this.timeEnd = timeEnd;
     }
 
     public RouteModel() {}
@@ -85,27 +90,35 @@ public class RouteModel {
         this.price = price;
     }
 
-    public String getTravellingTime() {
-        return travellingTime;
+    public String getDateStart() {
+        return dateStart;
     }
 
-    public void setTravellingTime(String travellingTime) {
-        this.travellingTime = travellingTime;
+    public void setDateStart(String timingStart) {
+        this.dateStart = timingStart;
     }
 
-    public String getTimingStart() {
-        return timingStart;
+    public String getDateEnd() {
+        return dateEnd;
     }
 
-    public void setTimingStart(String timingStart) {
-        this.timingStart = timingStart;
+    public void setDateEnd(String dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
-    public String getTimingEnd() {
-        return timingEnd;
+    public String getTimeStart() {
+        return timeStart;
     }
 
-    public void setTimingEnd(String timingEnd) {
-        this.timingEnd = timingEnd;
+    public void setTimeStart(String timeStart) {
+        this.timeStart = timeStart;
+    }
+
+    public String getTimeEnd() {
+        return timeEnd;
+    }
+
+    public void setTimeEnd(String timeEnd) {
+        this.timeEnd = timeEnd;
     }
 }

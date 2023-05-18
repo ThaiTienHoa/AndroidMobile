@@ -23,11 +23,15 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 public class DetailBookingActivity extends AppCompatActivity {
-
 
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -101,11 +105,17 @@ public class DetailBookingActivity extends AppCompatActivity {
                     assert busId != null;
                     busRef.document(busId).get().addOnSuccessListener(busDoc -> {
                         String busName = (String) busDoc.get("name");
-                        String startTime = (String) busDoc.get("timingStart");
-                        String endTime = (String) busDoc.get("timingEnd");
-                        String travellingTime = (String) busDoc.get("travellingTime");
-                        tvTotalTime.setText(travellingTime + " hours to travel");
-                        tvDepArrTime.setText(startTime + "h - " + endTime + "h");
+                        String dateStart = (String) busDoc.get("dateStart");
+                        String dateEnd = (String) busDoc.get("dateEnd");
+                        String timeStart = (String) busDoc.get("timeStart");
+                        String timeEnd = (String) busDoc.get("timeEnd");
+                        boolean isDate = isEndRouteByDate(dateStart, timeStart);
+                        if (isDate) {
+                            tvTotalTime.setText("Trạng thái: Đã khởi hành");
+                        } else {
+                            tvTotalTime.setText("Trạng thái: Sắp bắt đầu");
+                        }
+                        tvDepArrTime.setText(dateStart + " " + timeStart + " -> " + dateEnd + " " + timeEnd);
                         tvBusName.setText(busName);
                     });
                 });
@@ -145,5 +155,33 @@ public class DetailBookingActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private boolean isEndRouteByDate(String dateString, String hourString) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+
+        try {
+            // Chuyển chuỗi thành đối tượng Date
+            Date dateToCompare = dateFormat.parse(dateString + " " + hourString);
+
+            // Lấy thời gian hiện tại
+            Calendar calendar = Calendar.getInstance();
+            Date currentDate = calendar.getTime();
+
+            // So sánh ngày
+            if (dateToCompare.equals(currentDate)) {
+                System.out.println("Ngày " + dateToCompare + " - " + currentDate + " bằng ngày hiện tại.");
+                return true;
+            } else if (dateToCompare.before(currentDate)) {
+                System.out.println("Ngày " + dateToCompare + " - " + currentDate + " đã trôi qua.");
+                return true;
+            } else {
+                System.out.println("Ngày " + dateToCompare + " - " + currentDate + " đến sau ngày hiện tại.");
+                return false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

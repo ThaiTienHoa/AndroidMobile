@@ -12,8 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.loginandregister.R;
 import com.example.loginandregister.model.RouteModel;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder> {
@@ -74,8 +72,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder> 
             tvBusDes.setText(routeModel.getDescription());
             tvBusBoarding.setText(routeModel.getFrom());
             tvBusDestination.setText(routeModel.getTo());
-            tvDepArrTime.setText(routeModel.getTimingStart());
-            tvTotalTime.setText(routeModel.getTravellingTime());
+            tvDepArrTime.setText(routeModel.getDateStart());
             tvPrice.setText(routeModel.getPrice());
             busBookingCard.setOnClickListener(view -> onBusItemListener.onClick(routeModel));
         }

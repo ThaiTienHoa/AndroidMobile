@@ -3,7 +3,6 @@ package com.example.loginandregister.acitivites.payments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,7 +18,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -39,7 +37,7 @@ public class PaymentsActivity extends AppCompatActivity {
     TextView tvStartingPoint, tvEndingPoint, tvStartTime, tvEndingTime, textView5, tvPrice;
     Button btnDone;
 
-    String from, to, travellingTime, price, timingStart, timingEnd;
+    String from, to, travellingTime, price, dateStart, dateEnd, timeStart, timeEnd;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,12 +58,12 @@ public class PaymentsActivity extends AppCompatActivity {
         String seatNo = getIntent().getStringExtra("seat_no");
         getBusesData(busId);
         btnDone.setOnClickListener(view -> {
-            String idBooking = createOrder(from, to); //Tạo một đơn mới
-            updateSeat(busId, seatNo); //Cập nhật trạng thái ghế ngồi
-            updateBusIdForUser(busId); //Cập nhật mã chuyến xe
-            setBookingData(idBooking, busId, email, mobile, name, age, seatNo); //Lưu thông tin đặt vé vào cơ sở dữ liệu
+            String idBooking = createOrder(from, to);
+            updateSeat(busId, seatNo);
+            updateBusIdForUser(busId);
+            setBookingData(idBooking, busId, email, mobile, name, age, seatNo);
             Toast.makeText(getApplicationContext(), "Your order sucessfull", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(getApplicationContext(), MainActivity.class)); //Chuyển đến màn hình chính
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
         });
     }
 
@@ -74,15 +72,15 @@ public class PaymentsActivity extends AppCompatActivity {
             if (doc != null) {
                 from = (String) doc.getData().get("from");
                 to = (String) doc.getData().get("to");
-                travellingTime = (String) doc.getData().get("travellingTime");
                 price = (String) doc.getData().get("price");
-                timingStart = (String) doc.getData().get("timingStart");
-                timingEnd = (String) doc.getData().get("timingEnd"); // Lấy thông tin
-                tvStartingPoint.setText(from); // Gán vào giao diện người dùng
+                dateStart = (String) doc.getData().get("dateStart");
+                dateEnd = (String) doc.getData().get("dateEnd");
+                timeStart = (String) doc.getData().get("timeStart");
+                timeEnd = (String) doc.getData().get("timeEnd");
+                tvStartingPoint.setText(from);
                 tvEndingPoint.setText(to);
-                textView5.setText(travellingTime);
-                tvStartTime.setText(timingStart);
-                tvEndingTime.setText(timingEnd);
+                tvStartTime.setText(dateStart);
+                tvEndingTime.setText(dateEnd);
                 tvPrice.setText(price);
             }
         });
@@ -127,7 +125,6 @@ public class PaymentsActivity extends AppCompatActivity {
         });
     }
 
-    //Cập nhật thông tin booking
     private void setBookingData(String bookingId, String busId, String email, String phone, String name, String age, String seatNo) {
         bookingRef.document(bookingId).update("email", email);
         bookingRef.document(bookingId).update("mobile", phone);
