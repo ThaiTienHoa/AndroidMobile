@@ -12,6 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.loginandregister.R;
 import com.example.loginandregister.model.RouteModel;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder> {
@@ -49,7 +53,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder> 
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvBusName, tvBusDes, tvBusBoarding, tvBusDestination, tvDepArrTime, tvTotalTime, tvPrice;
+        TextView tvBusName, tvBusDes, tvBusBoarding, tvBusDestination, tvDepArrTime, tvTotalTime, tvPrice, status;
         LinearLayout busBookingCard;
 
         OnBusItemListener onBusItemListener;
@@ -64,6 +68,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder> 
             tvTotalTime = itemView.findViewById(R.id.tvTotalTime);
             tvPrice = itemView.findViewById(R.id.tvPrise);
             busBookingCard = itemView.findViewById(R.id.busBookingCard);
+            status = itemView.findViewById(R.id.status);
             this.onBusItemListener = onBusItemListener;
         }
 
@@ -75,6 +80,40 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder> 
             tvDepArrTime.setText(routeModel.getDateStart());
             tvPrice.setText(routeModel.getPrice());
             busBookingCard.setOnClickListener(view -> onBusItemListener.onClick(routeModel));
+            boolean isDate = isEndRouteByDate(routeModel.getDateStart(), routeModel.getTimeStart());
+            if (isDate) {
+                status.setText("Trạng thái: Đã khởi hành");
+            } else {
+                status.setText("Trạng thái: Sắp bắt đầu");
+            }
+        }
+
+        private boolean isEndRouteByDate(String dateString, String hourString) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+
+            try {
+                // Chuyển chuỗi thành đối tượng Date
+                Date dateToCompare = dateFormat.parse(dateString + " " + hourString);
+
+                // Lấy thời gian hiện tại
+                Calendar calendar = Calendar.getInstance();
+                Date currentDate = calendar.getTime();
+
+                // So sánh ngày
+                if (dateToCompare.equals(currentDate)) {
+                    System.out.println("Ngày " + dateToCompare + " - " + currentDate + " bằng ngày hiện tại.");
+                    return true;
+                } else if (dateToCompare.before(currentDate)) {
+                    System.out.println("Ngày " + dateToCompare + " - " + currentDate + " đã trôi qua.");
+                    return true;
+                } else {
+                    System.out.println("Ngày " + dateToCompare + " - " + currentDate + " đến sau ngày hiện tại.");
+                    return false;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return false;
         }
     }
 }
